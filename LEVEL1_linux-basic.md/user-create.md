@@ -21,10 +21,3 @@ sudo usermod -aG dev devuser1
 sudo usermod -aG ops devuser2
 ```
 
-### *Configure Default Shells*
-
-```bash
-sudo usermod --shell /bin/bash devuser1
-sudo usermod --shell /bin/zsh devuser2
-```
-

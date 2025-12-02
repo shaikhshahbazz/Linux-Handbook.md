@@ -39,32 +39,8 @@ sudo usermod -aG dev devuser2
 
 ### ✔ Grant read & execute to group
 
-### ✔ Deny all to others
+### ✔ Grant read & execute to others
 
 ```bash
-sudo chmod 750 /opt/project-app
+sudo chmod 755 /opt/project-app
 ```
-
-## 📁 5. Allow Group Members to Create Files (Setgid)
-
-This ensures files created inside the directory inherit the *group*.
-
-```bash
-sudo chmod g+s /opt/project-app
-```
-
-## 🧪 6. Verify Permissions
-
-```bash
-ls -ld /opt/project-app
-```
-
-Example output: 
-
-```
-drwxr-s--- 2 devuser1 dev 4096 Dec 2 12:00 /opt/project-app
-```
-
-* `devuser1` = owner
-* `dev` = group
-* `rwxr-s---` = permissions

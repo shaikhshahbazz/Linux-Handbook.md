@@ -1,143 +1,115 @@
 ````md
-# 📌 Monitor System Performance and Troubleshoot Services
-````
-This section explains how to monitor system performance (CPU, RAM, disk, processes) and troubleshoot running services on a Linux server.  
-These commands work in Git Bash when connected to a Linux machine via SSH.
+# 📌 Create Shell Scripts: Log Cleanup, Service Restart, Health Checks
 
+This section includes simple shell scripts for common DevOps automation tasks.  
+All scripts can be executed in Git Bash (SSH into Linux).
 
-## 📈 1. Monitor System Performance
-
-### 🔹 Real-time system overview
-```bash
-top
 ````
 
-### 🔹 Modern alternative with better UI
+## 🧹 1. Log Cleanup Script
+
+This script clears log files older than 7 days and frees disk space.
+
+### 📄 cleanup-logs.sh
+```bash
+#!/bin/bash
+
+# Directory to clean logs
+LOG_DIR="/var/log"
+
+# Delete logs older than 7 days
+find $LOG_DIR -type f -mtime +7 -exec rm -f {} \;
+
+echo "Old logs cleaned successfully!"
+````
+
+Make executable:
 
 ```bash
-htop
+chmod +x cleanup-logs.sh
 ```
 
-(Install: `sudo apt install htop -y`)
-
-## 🧠 2. Check Memory Usage
+Run:
 
 ```bash
-free -h
+./cleanup-logs.sh
 ```
 
-### 🔹 Find processes consuming most RAM
+## 🔄 2. Service Restart Script
+
+This script checks if a service is running; if not, it automatically restarts it.
+
+### 📄 service-restart.sh
 
 ```bash
-ps aux --sort=-%mem | head
+#!/bin/bash
+
+SERVICE="nginx"
+
+# Check if service is active
+if systemctl is-active --quiet $SERVICE; then
+    echo "$SERVICE is running."
+else
+    echo "$SERVICE is not running. Restarting..."
+    sudo systemctl restart $SERVICE
+fi
 ```
 
-## 🖥️ 3. Check CPU Usage
+Make executable:
 
 ```bash
-lscpu
+chmod +x service-restart.sh
 ```
 
-### 🔹 Top CPU consumers
+Run:
 
 ```bash
-ps aux --sort=-%cpu | head
+./service-restart.sh
 ```
 
-### 🔹 System load average
+## ❤️ 3. Health Check Script
+
+This script checks CPU, memory, disk usage, and top processes.
+
+### 📄 health-check.sh
 
 ```bash
+#!/bin/bash
+
+echo "===== SYSTEM HEALTH CHECK ====="
+
+echo
+echo "📌 CPU Load:"
 uptime
-```
 
-## 💽 4. Check Disk Usage
+echo
+echo "📌 Memory Usage:"
+free -h
 
-```bash
+echo
+echo "📌 Disk Usage:"
 df -h
+
+echo
+echo "📌 Top 5 CPU Consuming Processes:"
+ps aux --sort=-%cpu | head -5
+
+echo
+echo "📌 Top 5 RAM Consuming Processes:"
+ps aux --sort=-%mem | head -5
+
+echo
+echo "Health check completed!"
 ```
 
-### 🔹 Check disk usage of a directory
+Make executable:
 
 ```bash
-du -sh /var/log
+chmod +x health-check.sh
 ```
 
-## 🔌 5. Check Running Services
-
-### 🔹 Check service status (example: nginx)
+Run:
 
 ```bash
-systemctl status nginx
-```
-
-### 🔹 Start service
-
-```bash
-sudo systemctl start nginx
-```
-
-### 🔹 Stop service
-
-```bash
-sudo systemctl stop nginx
-```
-
-### 🔹 Restart service
-
-```bash
-sudo systemctl restart nginx
-```
-
-### 🔹 Enable service on system boot
-
-```bash
-sudo systemctl enable nginx
-```
-
-## 🔍 6. Check Service Logs
-
-### 🔹 Using journalctl (systemd logs)
-
-```bash
-sudo journalctl -u nginx
-```
-
-### 🔹 See last 50 log entries
-
-```bash
-sudo journalctl -u nginx -n 50
-```
-
-### 🔹 Follow logs live
-
-```bash
-sudo journalctl -u nginx -f
-```
-
-## 🧪 7. Troubleshoot Service Failures
-
-### 🔹 Check why service failed
-
-```bash
-sudo systemctl status <service-name>
-```
-
-### 🔹 View detailed error logs
-
-```bash
-sudo journalctl -xe
-```
-
-### 🔹 Check port usage
-
-```bash
-sudo ss -tulpn
-```
-
-Example: find which service is using port 80.
-
-## 🧯 8. Restart System Log Service
-
-```bash
-sudo systemctl restart rsyslog
+./health-check.sh
 ```

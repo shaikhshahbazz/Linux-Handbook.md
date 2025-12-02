@@ -1,6 +1,6 @@
 # linux-handbook
 ├── README.md
-│   ├── LEVEL1_BASIC.md
+│   ├── LEVEL1_linux-basic.md
 │   ├── LEVEL2_INTERMEDIATE.md
 │   ├── LEVEL3_ADVANCED.md
 └── docs/
@@ -22,7 +22,7 @@ Each level is detailed in the /roadmap folder.
 
 ## 📂 Roadmap Files
 
-- [Level 1 — Basic](LEVEL1_BASIC.md)
+- [Level 1 — Basic](LEVEL1_linux-basic.md)
 - [Level 2 — Intermediate](LEVEL2_INTERMEDIATE.md)
 - [Level 3 — Advanced](LEVEL3_ADVANCED.md)
 

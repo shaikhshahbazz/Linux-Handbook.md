@@ -1,13 +1,13 @@
-Install packages
+## Install packages
 
-Git → install Git
+## Git → install Git
   sudo yum install git -y
   sudo git --version
 
-Nginx → install Nginx
+## Nginx → install Nginx
   sudo yum install nginx -y
   sudo nginx --version
   
-Java → install java
+## Java → install java
   sudo yum install java -y
   sudo java --version

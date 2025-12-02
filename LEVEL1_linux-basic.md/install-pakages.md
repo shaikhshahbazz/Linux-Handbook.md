@@ -1,4 +1,4 @@
-## Install packages
+### Install packages
 
 ## Git → install Git
   sudo yum install git -y
